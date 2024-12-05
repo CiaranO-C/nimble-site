@@ -1,0 +1,96 @@
+@import "../styles/animation.module.css";
+
+.dropZoneRoot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 200px;
+  min-width: 250px;
+  width: 75%;
+  max-width: 675px;
+  border-radius: 35px;
+  border: 5px solid red;
+  cursor: pointer;
+  box-shadow:
+    rgba(255, 0, 0, 0.468) 0px 12px 28px 0px,
+    rgba(255, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  transition:
+    color 0.5s ease-out,
+    border 0.3s ease-out,
+    box-shadow 0.3s ease-out;
+
+  div {
+    border-radius: 35px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    border-radius: 35px;
+    border: 5px solid rgba(255, 0, 0, 0.479);
+    width: calc(100% + 10px);
+    height: 210px;
+    z-index: -1;
+    transition: border 0.2s ease-out;
+  }
+
+  &[data-loading] {
+    transition: color 0.2s;
+    color: rgba(255, 255, 255, 0);
+
+    * {
+      background-color: transparent;
+    }
+  }
+
+  &[data-accept] {
+    transition:
+      border 0.2s ease-out,
+      box-shadow 0.2s ease-out;
+    border-color: var(--mantine-color-green-2);
+    box-shadow:
+      #6ada7d8c 0px 12px 28px 0px,
+      #6ada7d3b 0px 2px 4px 0px,
+      #6ada7d0b 0px 0px 0px 1px inset;
+  }
+
+  &[data-accept]::before {
+    transition: border 0.2s ease-out;
+    border-color: var(--mantine-color-green-4);
+  }
+
+  &[data-reject] {
+    transition: color 0.2s ease-out;
+    color: rgba(255, 255, 255, 0);
+    .csvWarning {
+      transition: color 0.2s ease-out;
+      color: red;
+    }
+  }
+}
+
+.dropZoneInner {
+  cursor: pointer;
+  font-family: Trap;
+  opacity: 0;
+  animation: fadeInSlideUp 0.4s ease-out forwards;
+  margin: 10px;
+}
+
+.csvWarning {
+  position: absolute;
+  color: transparent;
+  transition: color 0.2s ease-out;
+}
+
+.errorMessage {
+  font-family: Trap;
+  padding: 4px 25px 0px;
+}
+
+.errorButton {
+  background-color: red;
+  border: none;
+}
