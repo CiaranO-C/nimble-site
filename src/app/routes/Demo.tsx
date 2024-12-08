@@ -1,19 +1,11 @@
-import styled from "styled-components";
-import CSVReader from "../../components/upload/FileUpload";
-import { getTestData } from "../../features/demo/utils";
-import { handleFileSubmit } from "../../components/upload/utils";
+import { Title } from "@mantine/core";
 
 function Demo() {
   return (
     <>
-      <CSVReader handleFile={handleFileSubmit} />
-      <TestButton onClick={getTestData}>hello</TestButton>
+      <Title>Demo</Title>
     </>
   );
 }
-
-const TestButton = styled.button`
-  font-family: "Trap";
-`;
 
 export default Demo;
