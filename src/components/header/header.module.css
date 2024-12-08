@@ -1,16 +1,40 @@
+@import "../styles/animation.module.css";
+
 .mainHeader {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 5px 20px;
+  padding: 10px 20px;
+}
 
-  h1 {
-    flex: 1;
+.logoContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  a {
+    margin-right: 10px;
+  }
+
+  a:visited {
+    color: inherit;
+  }
+
+  svg {
+    transform: rotate(0deg);
+    transition: transform 5s;
+  }
+
+  &:hover {
+    svg {
+      animation: rotate 2s linear infinite;
+    }
   }
 }
 
 .authButtons {
-    button {
-        margin: 0px 5px;
-    }
+  button {
+    margin: 0px 5px;
+  }
 }
