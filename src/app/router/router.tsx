@@ -4,6 +4,8 @@ import App from "../App";
 import Demo from "../routes/Demo";
 import Preview from "../routes/Preview";
 import Help from "../routes/Help";
+import PreviewStats from "../routes/PreviewStats";
+import PublicLayout from "../routes/layouts/PublicLayout";
 
 const router = createBrowserRouter([
   {
@@ -15,16 +17,26 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: "preview",
-        element: <Preview />,
+        path: "public",
+        element: <PublicLayout />,
+        children: [
+          {
+            path: "preview",
+            element: <Preview />,
+          },
+          {
+            path: "stats",
+            element: <PreviewStats />,
+          },
+          {
+            path: "help",
+            element: <Help />,
+          },
+        ],
       },
       {
         path: "demo",
         element: <Demo />,
-      },
-      {
-        path: "help",
-        element: <Help />,
       },
     ],
   },
