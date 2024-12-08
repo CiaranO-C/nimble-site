@@ -1,15 +1,13 @@
 import { Outlet } from "react-router";
 import "@mantine/core/styles.css";
+import '@mantine/charts/styles.css';
 import {
   ColorSchemeScript,
   MantineProvider,
   MantineColorsTuple,
   createTheme,
-  Button,
 } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
-import Header from "../components/header/Header";
-import landingStyles from "./routes/styles/landing.module.css";
 
 const popRed: MantineColorsTuple = [
   "#ffe8eb",
@@ -48,7 +46,6 @@ function App() {
       <ColorSchemeScript defaultColorScheme="auto" />
       <MantineProvider defaultColorScheme="auto" theme={theme}>
         <ModalsProvider>
-          <Header />
           <Outlet />
         </ModalsProvider>
       </MantineProvider>
