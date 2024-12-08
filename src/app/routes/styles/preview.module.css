@@ -1,0 +1,61 @@
+.demoLink {
+  background-color: var(--mantine-color-popRed-6);
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: var(--mantine-color-white);
+  font-weight: 400;
+  font-family: Trap;
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+}
+
+.demoLink:hover {
+  transform: scale(1.1);
+  box-shadow:
+    rgba(255, 0, 0, 0.276) 0px 4px 16px,
+    rgba(255, 0, 0, 0.276) 0px 8px 24px,
+    rgba(255, 0, 0, 0.276) 0px 16px 56px;
+}
+
+.infoContainer {
+  font-family: Trap;
+  background-color: transparent;
+  color: var(--mantine-color-text);
+  padding: 5px;
+  height: 200px;
+  width: 60ch;
+  text-align: center;
+
+  & > div {
+    font-size: 1rem;
+    font-weight: 100;
+    background-color: transparent;
+    border-radius: 25px;
+    padding: 15px 25px;
+    flex: 1;
+    height: 100%;
+  }
+
+  & > p {
+    font-size: 1.2rem;
+    padding-bottom: 10px;
+  }
+}
+
+.backgroundSvg {
+  position: absolute;
+  z-index: -1;
+  height: 850px;
+  width: 850px;
+}
+
+.svgOne {
+  right: 0;
+  transform: translate(75%, 34%) rotate(58deg);
+}
+
+.svgTwo {
+  left: 0;
+  transform: translate(-83%, -43%) rotate(79deg);
+}
