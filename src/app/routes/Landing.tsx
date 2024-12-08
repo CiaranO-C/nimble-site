@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { em, Group, Text, Title, useMantineColorScheme } from "@mantine/core";
 import styles from "./styles/landing.module.css";
-import Logo from "../../../public/svg/logo.svg?react";
+import Logo from "../../assets/svg/popstatsLogo.svg?react"
 import { modals } from "@mantine/modals";
 import { useMediaQuery } from "@mantine/hooks";
 
@@ -47,10 +47,10 @@ function Landing() {
             }
             className={demoLink}
           >
-            Sign up
+            <span>Join now</span>
           </button>
-          <Link className={demoLink} to="/demo">
-            Explore demo
+          <Link className={demoLink} to="/preview">
+            <span>Try for free</span>
           </Link>
         </Group>
       </div>

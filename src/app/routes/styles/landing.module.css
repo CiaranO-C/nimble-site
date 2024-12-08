@@ -40,22 +40,9 @@
   transition: height 0.3s ease-out;
 }
 
-.demoLink:hover,
-.content h1:hover ~ div .demoLink {
-  background-position: 0 -100%;
-  transform: scale(1.1);
-  transition:
-    background-position 0.1s 0.25s,
-    transform 0.1s 0.25s,
-    color 0.3s ease-out,
-    box-shadow 0.2s 0.25s ease-out;
-  box-shadow:
-    rgba(255, 0, 0, 0.276) 0px 4px 16px,
-    rgba(255, 0, 0, 0.276) 0px 8px 24px,
-    rgba(255, 0, 0, 0.276) 0px 16px 56px;
-}
-
 .demoLink {
+  position: relative;
+  overflow: hidden;
   height: 50px;
   display: flex;
   align-items: center;
@@ -75,16 +62,71 @@
     transform 0.1s,
     color 1s ease-out,
     box-shadow 0.2s ease-out;
+
+  span {
+    z-index: 1;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.demoLink:hover,
+.content h1:hover ~ div .demoLink {
+  transform: scale(1.1);
+  box-shadow:
+    rgba(255, 0, 0, 0.276) 0px 4px 16px,
+    rgba(255, 0, 0, 0.276) 0px 8px 24px,
+    rgba(255, 0, 0, 0.276) 0px 16px 56px;
+
+  &::before {
+    background-color: red;
+  }
+
+  span {
+    color: white;
+  }
+}
+
+.demoLink:hover {
+  transition:
+    transform 0.1s,
+    box-shadow 0.2s ease-out;
+
+  &::before {
+    transition: background-color 0.2s;
+  }
+
+  span {
+    transition: color 0.2s;
+  }
+}
+
+.content h1:hover ~ div .demoLink {
+  transition:
+    transform 0.1s 0.25s,
+    color 0.3s ease-out,
+    box-shadow 0.2s 0.25s ease-out;
+
+  &::before {
+    transition: background-color 0.2s 0.25s;
+  }
+
+  span {
+    transition: color 0.2s 0.25s;
+  }
 }
 
 .demoLink + .demoLink {
   margin-left: 20px;
-}
-
-.containerDark .content {
-  h1::before {
-    color: red;
-  }
 }
 
 .logo {
@@ -101,6 +143,5 @@
 
 .aboutText {
   font-family: Trap;
-  max-width: 900px;
   border-bottom: 1px solid;
 }
