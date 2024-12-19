@@ -12,15 +12,34 @@ async function getTestData() {
     body: JSON.stringify({
       query: `{
         salesAnalytics {
-          totalSales
-          averageSaleValue
+          salesByDate {
+            total
+            date
           }
-        }`,
-      variables: { userId: "3ea560b7-54e8-4cc1-bf91-732aae17efee" },
+          totalSales {
+            sales
+            revenue
+          }
+          averageSales {
+            byDate {
+              daily {
+                average
+                date
+              }
+              monthly {
+                average
+                month
+              }
+            }
+          }
+        }
+      }`,
+      variables: { userId: id },
     }),
   });
   const response = await res.json();
   console.log(response);
+  return response.data.salesAnalytics;
 }
 
 export { getTestData };
