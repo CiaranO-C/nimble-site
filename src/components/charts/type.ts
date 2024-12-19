@@ -2,10 +2,18 @@ import { dateMap } from "./utils";
 
 type monthKey = keyof typeof dateMap;
 
-interface SalesByDate {
-  salesByDate: { total: number; date: TDateISO };
+interface SaleByDate {
+  total: number;
+  date: TDateISO;
 }
 
+type DailyAverage = { average: number; date: string };
+type MonthlyAverage = { average: number; month: string };
+type DateAverages = { daily: DailyAverage; monthly: MonthlyAverage };
+
+type AverageSales = {
+  byDate: DateAverages;
+};
 
 type TYear = `${number}${number}${number}${number}`;
 type TMonth = `${number}${number}`;
@@ -21,4 +29,4 @@ type TDateISOTime = `${THours}:${TMinutes}:${TSeconds}.${TMilliseconds}`;
 
 type TDateISO = `${TDateISODate}T${TDateISOTime}Z`;
 
-export type { monthKey, TDateISO, SalesByDate };
+export type { monthKey, TDateISO, SaleByDate, AverageSales };
