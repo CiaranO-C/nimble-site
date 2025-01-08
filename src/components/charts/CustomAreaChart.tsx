@@ -3,7 +3,9 @@ import {
   generateSeries,
   generateTicks,
   getDateRange,
+  isKeyOfMonthMap,
   leadingZero,
+  monthMap,
 } from "./utils";
 import DateTooltip from "./DateTooltip";
 import { Checkbox, SegmentedControl, useMantineTheme } from "@mantine/core";
@@ -100,17 +102,19 @@ function CustomAreaChart(props: {
           ticks: daily ? undefined : generateTicks(data),
           tickFormatter: (tick: string, i): string => {
             const date = new Date(tick);
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
             if (daily) {
               if ((i + 1) % 2 === 0) return "";
-              return `${leadingZero(day)}/${leadingZero(month)}`;
+              return date.toLocaleString().split(",")[0].slice(0, 5);
             }
+            const month = `${date.getMonth()}`;
+            if(isKeyOfMonthMap(month)) return monthMap[month]
             return tick;
           },
           axisLine: true,
         }}
-        yAxisProps={{ axisLine: true }}
+        yAxisProps={{ axisLine: true, /*domain: ([min, max], overflow): [number, number] => {
+          return [min, max]
+        } */}}
         tooltipProps={{
           content: ({ label, payload }) => (
             <DateTooltip label={label} payload={payload} />
