@@ -8,7 +8,7 @@ import {
 } from "./type";
 
 function generateSeries(
-  data,
+  data: any,
   keys: SeriesData[],
   colors: Record<DefaultMantineColor, MantineColorsTuple>,
 ) {

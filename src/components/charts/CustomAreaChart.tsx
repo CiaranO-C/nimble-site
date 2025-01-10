@@ -4,7 +4,6 @@ import {
   generateTicks,
   getDateRange,
   isKeyOfMonthMap,
-  leadingZero,
   monthMap,
 } from "./utils";
 import DateTooltip from "./DateTooltip";
