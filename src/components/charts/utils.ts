@@ -1,27 +1,54 @@
-import { SaleByDate, TDateISO } from "./type";
+import { DefaultMantineColor, MantineColorsTuple } from "@mantine/core";
+import {
+  RevenueByDate,
+  SaleItemsByDate,
+  SalesByDate,
+  SeriesData,
+  TDateISO,
+} from "./type";
 
-function generateSeries(data, keysToRemove: string[], colors) {
-  const series = Object.keys(data[0])
-    .filter((elem) => !keysToRemove.includes(elem))
-    .map((field, i) => {
+function generateSeries(
+  data,
+  keys: SeriesData[],
+  colors: Record<DefaultMantineColor, MantineColorsTuple>,
+) {
+  const colorMap: Record<SeriesData, string> = {
+    total: colors[Object.keys(colors)[1]][6],
+    net: colors[Object.keys(colors)[2]][6],
+    shipping: colors[Object.keys(colors)[3]][6],
+    sales: colors[Object.keys(colors)[1]][6],
+    refunds: colors[Object.keys(colors)[2]][6],
+    bundles: colors[Object.keys(colors)[3]][6],
+    boosted: colors[Object.keys(colors)[1]][6],
+    items: colors[Object.keys(colors)[2]][6],
+    average: colors[Object.keys(colors)[3]][6]
+  };
+  const series = Object.keys(data)
+    .filter((field) => keys.includes(field as SeriesData))
+    .map((field) => {
       return {
         name: field,
-        color: "red", //colors[Object.keys(colors)[i + 1]][6],
+        color: colorMap[field as SeriesData],
       };
     });
 
   return series;
 }
 
-function generateTicks(data): string[] {
+function generateTicks(
+  data: RevenueByDate[] | SalesByDate[] | SaleItemsByDate[],
+): string[] {
+  const monthSet = new Set<number>();
   const tickSet = new Set<string>();
   data.forEach((obj) => {
     const { date } = obj;
-    const monthNum = (new Date(date).getMonth() + 1).toString();
-    if (monthNum in monthMap) {
-      tickSet.add(monthMap[monthNum as keyof typeof monthMap]);
+    const monthNum = new Date(date).getMonth();
+    if (!monthSet.has(monthNum)) {
+     tickSet.add(date)
+     monthSet.add(monthNum);
     }
   });
+  
   return [...tickSet.values()];
 }
 
@@ -39,14 +66,16 @@ function getMonth(iso: TDateISO) {
   return "Error: invalid month";
 }
 
-function getDateRange(data: SaleByDate[]) {
-  console.log(data[0]);
-
+function getDateRange(
+  data: RevenueByDate[] | SalesByDate[] | SaleItemsByDate[],
+) {
   const first = data[0]?.date;
   const last = data[data.length - 1]?.date;
+
   const start = isKeyOfMonthMap(first)
     ? monthMap[first]
     : new Date(first).toLocaleDateString();
+
   const end = isKeyOfMonthMap(last)
     ? monthMap[last]
     : new Date(last).toLocaleDateString();
