@@ -2,12 +2,10 @@ import {
   Group,
   rem,
   Text,
-  Button,
   Stack,
   Title,
   useMantineColorScheme,
 } from "@mantine/core";
-import { getTestData } from "../../features/demo/utils";
 import styles from "./styles/preview.module.css";
 import { Link } from "react-router";
 import CustomDropzone from "../../components/upload/CustomDropzone";
@@ -60,7 +58,6 @@ function Preview() {
             on how to get your sales data.
           </Text>
         </Stack>
-        <Button onClick={getTestData}>hello</Button>
         <footer
           style={{
             width: "120%",
