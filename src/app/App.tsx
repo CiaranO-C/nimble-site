@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import "@mantine/core/styles.css";
-import '@mantine/charts/styles.css';
+import "@mantine/charts/styles.css";
 import {
   ColorSchemeScript,
   MantineProvider,
@@ -8,6 +8,7 @@ import {
   createTheme,
 } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const popRed: MantineColorsTuple = [
   "#ffe8eb",
@@ -34,21 +35,23 @@ const theme = createTheme({
     fontWeight: "800",
   },
   components: {
-    Button: {
-      
-    },
+    Button: {},
   },
 });
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      <ColorSchemeScript defaultColorScheme="auto" />
-      <MantineProvider defaultColorScheme="auto" theme={theme}>
-        <ModalsProvider>
-          <Outlet />
-        </ModalsProvider>
-      </MantineProvider>
+      <QueryClientProvider client={queryClient}>
+        <ColorSchemeScript defaultColorScheme="auto" />
+        <MantineProvider defaultColorScheme="auto" theme={theme}>
+          <ModalsProvider>
+            <Outlet />
+          </ModalsProvider>
+        </MantineProvider>
+      </QueryClientProvider>
     </>
   );
 }

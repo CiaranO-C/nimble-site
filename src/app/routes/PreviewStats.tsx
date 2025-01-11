@@ -1,6 +1,6 @@
 import { Button, Grid, Group, Paper, Stack, Title } from "@mantine/core";
-import { getTestData } from "../../features/demo/utils";
-import { useState } from "react";
+import { getPreviewData } from "../../features/demo/utils";
+import { useEffect, useState } from "react";
 import CustomAreaChart from "../../components/charts/CustomAreaChart";
 
 import {
@@ -10,6 +10,7 @@ import {
 } from "../../components/charts/type";
 import CustomBarChart from "../../components/charts/CustomBarChart";
 import CustomPieChart from "../../components/charts/CustomPieChart";
+import { useQuery } from "react-query";
 
 interface ChartData {
   buyers: BuyersData;
@@ -21,6 +22,17 @@ interface ChartData {
 
 function PreviewStats() {
   const [chartData, setChartData] = useState<ChartData | null>(null);
+  const { data, status } = useQuery({
+    queryKey: ["stats"],
+    queryFn: () => getPreviewData(),
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (data && status === "success") {
+      setChartData(data);
+    }
+  }, [data]);
 
   return (
     <>
@@ -28,14 +40,6 @@ function PreviewStats() {
         <Grid.Col span={12}>
           <Stack>
             <Title>Stats!</Title>
-            <Button
-              onClick={async () => {
-                const data = await getTestData();
-                setChartData(data);
-              }}
-            >
-              load data
-            </Button>
           </Stack>
         </Grid.Col>
 

@@ -7,11 +7,13 @@ import { BounceLoader } from "react-spinners";
 import { errorMap, submitFile } from "./utils.ts";
 import { Stack, Text } from "@mantine/core";
 import DropErrorMsg from "../../features/preview/DropErrorMsg";
+import { useNavigate } from "react-router";
 
 function CustomDropzone() {
   const [dropzoneKey, toggleDropzoneKey] = useToggle([0, 1]);
   const [errorCode, setErrorCode] = useState<ErrorCodes | null>(null);
   const [loading, handler] = useDisclosure();
+  const navigate = useNavigate();
 
   function handleFileReject(errorCode: string) {
     if (errorCode in errorMap) {
@@ -28,13 +30,13 @@ function CustomDropzone() {
     handler.open();
     const statusCode = await submitFile(files);
     if (statusCode === 422) setErrorCode(422);
+    if(statusCode === 200) navigate("/public/stats");
     handler.close();
   }
 
   return (
     <>
       <Dropzone
-        mt={75}
         onDragOver={() => {
           if (errorCode === "file-invalid-type") setErrorCode(null);
         }}
