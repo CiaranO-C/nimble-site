@@ -1,4 +1,4 @@
-import { Button, Grid, Group, Paper, Stack, Title } from "@mantine/core";
+import { Grid, Group, Paper, Stack, Title } from "@mantine/core";
 import { getPreviewData } from "../../features/demo/utils";
 import { useEffect, useState } from "react";
 import CustomAreaChart from "../../components/charts/CustomAreaChart";
