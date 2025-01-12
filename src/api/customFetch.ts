@@ -1,5 +1,5 @@
 async function customFetch(args: RequestInit) {
-  const res = await fetch("http://localhost:5501/graphql", args);
+  const res = await fetch(import.meta.env.VITE_API_URL, args);
   return res;
 }
 
