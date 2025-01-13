@@ -1,11 +1,12 @@
 import { FileWithPath } from "@mantine/dropzone";
+import { customFetch } from "../../api/customFetch";
 
 async function submitFile(files: FileWithPath[]): Promise<number> {
   try {
     // handler.open();
     const formData = new FormData();
     formData.append("csv", files[0]);
-    const res = await fetch("http://localhost:5501/upload", {
+    const res = await customFetch({
       method: "POST",
       body: formData,
     });
