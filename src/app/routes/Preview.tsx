@@ -37,7 +37,7 @@ function Preview() {
               No file? No problem!
               <br />
             </Title>
-            <Link to="/demo" className={styles.demoLink}>
+            <Link to="/public/stats" className={styles.demoLink}>
               Try the demo
             </Link>
           </Group>
