@@ -77,12 +77,20 @@ type BuyersData = {
 
 type SalesRevenueData = {
   total: number;
+  net: number;
   byDate: { all: RevenueByDate[] };
   average: AverageSales;
 };
 
 type SalesCountData = {
   byDate: { all: SalesByDate[]; items: SaleItemsByDate[] };
+  sales: number;
+  bundles: number;
+  refunds: number;
+};
+
+type ItemsCountData = {
+  all: number;
 };
 
 export type {
@@ -105,4 +113,5 @@ export type {
   BuyerList,
   RepeatBuyerList,
   BuyersByCountry,
+  ItemsCountData,
 };
