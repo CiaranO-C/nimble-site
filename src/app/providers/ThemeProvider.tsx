@@ -24,7 +24,11 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 function useTheme() {
-  return useContext(ThemeContext);
+  const value = useContext(ThemeContext);
+  if (value === null)
+    throw new Error("useTheme can only be used within ThemeProvider wrapper");
+
+  return value;
 }
 
 export { ThemeProvider, useTheme };
