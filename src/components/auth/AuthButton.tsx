@@ -24,6 +24,7 @@ function AuthButton({
           fullScreen: isMobile,
           centered: true,
           children,
+          style: { width: "100vw" },
         });
       }}
     >

@@ -42,7 +42,9 @@ function Landing() {
                 title: "Sign up",
                 fullScreen: isMobile,
                 centered: true,
+                size: "lg",
                 children: <p>coming soon</p>,
+                style: { width: "100vw" },
               })
             }
             className={demoLink}
