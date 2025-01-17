@@ -11,10 +11,21 @@ function DropErrorMsg({
   classes: { text: string; button?: string };
 }) {
   return (
-    <Group>
+    <Group
+      style={{
+        display: "flex",
+        border: "1px dashed red",
+        borderRadius: "25px",
+        height: "40px",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0",
+      }}
+    >
       <Text className={classes.text}>{message}</Text>
       {button && (
         <Button
+          style={{ height: "100%", border: "none", borderRadius: "25px" }}
           onClick={() =>
             modals.open({
               title: "Sign up",
