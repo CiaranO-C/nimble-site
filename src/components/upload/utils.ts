@@ -1,4 +1,5 @@
 import { FileWithPath } from "@mantine/dropzone";
+import { getUserId } from "../../features/demo/utils";
 
 async function submitFile(files: FileWithPath[]): Promise<number> {
   try {
@@ -8,6 +9,7 @@ async function submitFile(files: FileWithPath[]): Promise<number> {
         : "http://localhost:5501/upload";
     const formData = new FormData();
     formData.append("csv", files[0]);
+    formData.append("userId", getUserId() ?? "");
     const res = await fetch(path, {
       method: "POST",
       body: formData,

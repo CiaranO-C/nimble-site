@@ -10,6 +10,7 @@
   width: 75%;
   max-width: 675px;
   border-radius: 35px;
+  background-color: var(--mantine-color-body);
   border: 5px solid red;
   cursor: pointer;
   box-shadow:
