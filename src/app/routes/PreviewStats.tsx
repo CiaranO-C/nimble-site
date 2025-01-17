@@ -1,16 +1,26 @@
-import { Grid, Group, Paper, Stack, Title } from "@mantine/core";
+import {
+  Divider,
+  Grid,
+  Group,
+  Paper,
+  Stack,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { getPreviewData } from "../../features/demo/utils";
 import { useEffect, useState } from "react";
 import CustomAreaChart from "../../components/charts/CustomAreaChart";
 
 import {
   BuyersData,
+  ItemsCountData,
   SalesCountData,
   SalesRevenueData,
 } from "../../components/charts/type";
 import CustomBarChart from "../../components/charts/CustomBarChart";
 import CustomPieChart from "../../components/charts/CustomPieChart";
 import { useQuery } from "react-query";
+import TotalCard from "../../components/stats/TotalCard";
 
 interface ChartData {
   buyers: BuyersData;
@@ -18,18 +28,28 @@ interface ChartData {
     revenue: SalesRevenueData;
     count: SalesCountData;
   };
+  items: {
+    count: ItemsCountData;
+  };
 }
 
 function PreviewStats() {
   const [chartData, setChartData] = useState<ChartData | null>(null);
+  const theme = useMantineTheme();
+  console.log(theme.colors);
+
   const { data, status } = useQuery({
     queryKey: ["stats"],
-    queryFn: () => getPreviewData(),
+    queryFn: getPreviewData,
     refetchOnWindowFocus: false,
   });
+  const money = "£";
 
   useEffect(() => {
     if (data && status === "success") {
+      console.log(data);
+      console.log(chartData);
+
       setChartData(data);
     }
   }, [data]);
@@ -37,16 +57,58 @@ function PreviewStats() {
   return (
     <>
       <Grid>
-        <Grid.Col span={12}>
+        <Grid.Col span={12} mt={"xl"}>
           <Stack>
-            <Title>Stats!</Title>
+            <Title style={{ textAlign: "center" }}>Your Stats</Title>
           </Stack>
         </Grid.Col>
 
         {chartData && (
           <>
             <Grid.Col span={12}>
-              <Group></Group>
+              <Paper shadow="lg" radius={"lg"} p="lg" withBorder>
+                <Group justify="space-evenly">
+                  <Stack style={{ flex: 1 }}>
+                    <TotalCard
+                      title="items"
+                      values={[
+                        {
+                          name: "Total sold",
+                          value: chartData.items.count.all,
+                        },
+                        {
+                          name: "bundles",
+                          value: chartData.sales.count.bundles,
+                        },
+                      ]}
+                    />
+                  </Stack>
+                  <Divider orientation="vertical" size={"sm"} />
+                  <Stack style={{ flex: 1 }}>
+                    <TotalCard
+                      title="sales"
+                      values={[
+                        { name: "Total", value: chartData.sales.count.sales },
+                        {
+                          name: "Refunds",
+                          value: chartData.sales.count.refunds,
+                        },
+                      ]}
+                    />
+                  </Stack>
+                  <Divider orientation="vertical" size={"sm"} />
+                  <Stack style={{ flex: 1 }}>
+                    <TotalCard
+                      title="revenue"
+                      values={[
+                        { name: "Gross", value: chartData.sales.revenue.total },
+                        { name: "Net", value: chartData.sales.revenue.net },
+                      ]}
+                      money={money}
+                    />
+                  </Stack>
+                </Group>
+              </Paper>
             </Grid.Col>
             <Grid.Col span={12}>
               <CustomAreaChart
@@ -55,48 +117,44 @@ function PreviewStats() {
                 items={chartData.sales.count.byDate.items}
               />
             </Grid.Col>
-            <Grid.Col span={6}>
-              <CustomBarChart
-                hourly={chartData.sales.revenue.average.byTime}
-                daily={chartData.sales.revenue.average.byDate.daily}
-                monthly={chartData.sales.revenue.average.byDate.monthly}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <Paper shadow="xs" p="xl">
-                <Stack>
-                  <Title order={3}>Insights</Title>
-                </Stack>
+            <Grid.Col span={12}>
+              <Paper shadow="lg" radius={"lg"} p="lg" withBorder>
+                <Title pb={10} ta={"center"} order={2}>
+                  Average Revenue
+                </Title>
+                <Divider p={10} />
+                <Group wrap="nowrap" justify="space-evenly">
+                  <CustomBarChart
+                    hourly={chartData.sales.revenue.average.byTime}
+                    daily={chartData.sales.revenue.average.byDate.daily}
+                    monthly={chartData.sales.revenue.average.byDate.monthly}
+                  />
+                </Group>
               </Paper>
             </Grid.Col>
-            <Grid.Col span={6}>
-              <Group>
-                <CustomPieChart
-                  data={chartData.buyers.byCountry}
-                  initialBool={false}
-                />
-                <Paper shadow="xs" p="xl">
-                  <Stack>
-                    <Title order={3}>Insights</Title>
-                  </Stack>
-                </Paper>
-              </Group>
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <Group>
-                <CustomPieChart
-                  data={{
-                    all: chartData.buyers.all,
-                    repeat: chartData.buyers.repeat,
-                  }}
-                  initialBool={true}
-                />
-                <Paper shadow="xs" p="xl">
-                  <Stack>
-                    <Title order={3}>Insights</Title>
-                  </Stack>
-                </Paper>
-              </Group>
+            <Grid.Col span={12}>
+              <Paper shadow="lg" radius={"lg"} p="lg" withBorder>
+                <Title pb={10} ta={"center"} order={2}>
+                  Buyers
+                </Title>
+                <Divider p={10} />
+                <Group justify="space-evenly">
+                  <CustomPieChart
+                    data={chartData.buyers.byCountry}
+                    initialBool={false}
+                    title="Location"
+                  />
+
+                  <CustomPieChart
+                    data={{
+                      all: chartData.buyers.all,
+                      repeat: chartData.buyers.repeat,
+                    }}
+                    initialBool={true}
+                    title="Repeat"
+                  />
+                </Group>
+              </Paper>
             </Grid.Col>
           </>
         )}

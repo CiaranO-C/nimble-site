@@ -14,7 +14,7 @@ function PublicLayout() {
         header={{ height: 60, collapsed: !pinned, offset: false }}
         padding="50px 50px 0px"
         pos="relative"
-        style={{ overflow: "hidden" }}
+        style={{ overflow: "hidden", width: "100vw" }}
       >
         <AppShell.Header>
           <Group h="100%" px="md">
@@ -23,7 +23,7 @@ function PublicLayout() {
             <AuthButtons />
           </Group>
         </AppShell.Header>
-        <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
+        <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`} pl={"xl"} pr={"xl"} pb={"xl"}>
           <Outlet />
         </AppShell.Main>
       </AppShell>
