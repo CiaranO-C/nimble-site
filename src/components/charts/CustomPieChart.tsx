@@ -1,14 +1,25 @@
 import { PieChart } from "@mantine/charts";
-import { Checkbox, useMantineTheme } from "@mantine/core";
+import {
+  Checkbox,
+  Divider,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { useState } from "react";
 import { BuyerList, BuyersByCountry, RepeatBuyerList } from "./type";
 
 function CustomPieChart({
   data,
   initialBool,
+  title,
 }: {
   data: { all: BuyerList; repeat: RepeatBuyerList } | BuyersByCountry;
   initialBool: boolean;
+  title: string;
 }) {
   const [percent, setPercent] = useState<boolean>(initialBool);
   const colors = useMantineTheme().colors;
@@ -37,26 +48,59 @@ function CustomPieChart({
     const repeatCount = repeat.count;
     const repeatValue = percent ? pct(repeatCount) : repeatCount;
     return [
-      { name: "all", value: allValue, color: "red" },
-      { name: "repeat", value: repeatValue, color: "blue" },
+      { name: "First Time", value: allValue, color: "red" },
+      { name: "Repeat", value: repeatValue, color: "blue" },
     ];
   }
 
   return (
-    <>
+    <Stack flex={1}>
+      <Title td="underline" ta="center" order={3}>
+        {title}
+      </Title>
       <Checkbox
         label="Percentage"
         checked={percent}
         onChange={() => setPercent((b) => !b)}
       />
-      <PieChart
-        valueFormatter={percent ? (value) => `${value}%` : undefined}
-        data={pieChartData()}
-        withTooltip
-        strokeWidth={0}
-        pieProps={{ isAnimationActive: true }}
-      />
-    </>
+      <Group>
+        <PieChart
+          valueFormatter={percent ? (value) => `${value}%` : undefined}
+          size={190}
+          data={pieChartData()}
+          strokeWidth={0}
+          pieProps={{ isAnimationActive: true }}
+          flex={1}
+        />
+        <Paper shadow="xs" p="xl" flex={1}>
+          <Stack gap={5} h={"190px"} style={{ overflowY: "scroll" }}>
+            {pieChartData()
+              .sort(({ value: a }, { value: b }) => b - a)
+              .map(({ name, value, color }) => (
+                <div key={`${name}${value}`}>
+                  <Group justify="space-between">
+                    <Text>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: "12px",
+                          height: "12px",
+                          backgroundColor: color,
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+                      {name}
+                    </Text>
+                    <Text>{percent ? `${value}%` : value}</Text>
+                  </Group>
+                  <Divider />
+                </div>
+              ))}
+          </Stack>
+        </Paper>
+      </Group>
+    </Stack>
   );
 }
 
