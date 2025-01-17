@@ -2,6 +2,8 @@
 
 ## 👋 Introduction
 Popstats is your go-to platform for unlocking actionable, data-driven insights tailored to help Depop sellers optimize their stores. By analyzing sales data, Popstats provides valuable metrics and trends, empowering you to make informed decisions.
+## 🚀 Visit Popstats  
+You can see Popstats for yourself here: [Popstats](https://www.popstats.io)
 ## 📌 Features
 - **Effortless Data Upload:** Use a simple drag-and-drop interface to quickly turn your CSV file into visualized, actionable insights.
 - **Demo Mode:** No file? No problem! Explore the platform with demo data at the click of a button.
