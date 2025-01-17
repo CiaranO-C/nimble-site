@@ -1,11 +1,18 @@
 import { customFetch } from "../../api/customFetch";
 import { previewQuery } from "./query";
 
+function getUserId() {
+  const id = sessionStorage.getItem("popstatsUserId");
+
+  return id;
+}
+
 async function getPreviewData() {
-  let id = sessionStorage.getItem("popstatsUserId");
+  let id = getUserId();
 
   const isDemo = id === null;
   if (isDemo) id = import.meta.env.VITE_DEMO_ID;
+  console.log(import.meta.env.VITE_API_URL);
 
   const res = await customFetch({
     method: "POST",
@@ -21,4 +28,4 @@ async function getPreviewData() {
   return response.data;
 }
 
-export { getPreviewData };
+export { getPreviewData, getUserId };

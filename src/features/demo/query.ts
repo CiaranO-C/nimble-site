@@ -1,6 +1,14 @@
 const previewQuery = `{
+        items {
+          count {
+            all
+          }
+        }
         sales {
           count {
+            sales
+            refunds
+            bundles
             byDate {
               all {
                 date
@@ -17,6 +25,7 @@ const previewQuery = `{
           }
           revenue {
             total
+            net
             byDate {
               all {
                 total
