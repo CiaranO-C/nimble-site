@@ -61,6 +61,8 @@ function CustomBarChart(props: BarChartProps) {
   );
 
   function getInsightValue(dataObj: MonthlyAverage | HourlyAverages) {
+    if (!dataObj) return "Invalid data";
+
     if (isDateType(dataObj)) {
       if (radioValue === "monthly") {
         const dateNum = new Date(dataObj.date).getMonth().toString();
@@ -82,6 +84,7 @@ function CustomBarChart(props: BarChartProps) {
     high: () => getInsightValue(sortedDescending[0]),
     second: () => getInsightValue(sortedDescending[1]),
     low: () => getInsightValue(sortedDescending[sortedDescending.length - 1]),
+    isSingle: () => currentData.length === 1,
   };
 
   function calculatePercentageDifference(
@@ -202,24 +205,35 @@ function CustomBarChart(props: BarChartProps) {
             <Text>
               Your highest grossing {insightMap[radioValue]} on average is{" "}
               <strong>{insightMap.high()}</strong> with a gross revenue of{" "}
-              <strong>{high}</strong>. This is{" "}
-              <strong>
-                {calculatePercentageDifference(
-                  high,
-                  sortedDescending[1]?.average || 0,
-                )}
-              </strong>{" "}
-              higher than the second highest {insightMap[radioValue]},{" "}
-              <strong>{insightMap.second() || "N/A"}</strong>.
+              <strong>{high}</strong>.{" "}
+              {!insightMap.isSingle() && (
+                <>
+                  {" This is "}
+                  <strong>
+                    {calculatePercentageDifference(
+                      high,
+                      sortedDescending[1]?.average || 0,
+                    )}
+                  </strong>{" "}
+                  higher than the second highest {insightMap[radioValue]},{" "}
+                  <strong>{insightMap.second() || "N/A"}</strong>.
+                </>
+              )}
             </Text>
             <Text>
               Your lowest grossing {insightMap[radioValue]} is{" "}
               <strong>{insightMap.low()}</strong> with an average revenue of{" "}
-              <strong>{low}</strong>. This is{" "}
-              <strong>
-                {calculatePercentageDifference(totalAverage, low)}
-              </strong>{" "}
-              lower than the overall average <strong>{totalAverage}</strong>.
+              <strong>{low}</strong>.{" "}
+              {!insightMap.isSingle() && (
+                <>
+                  This is{" "}
+                  <strong>
+                    {calculatePercentageDifference(totalAverage, low)}
+                  </strong>{" "}
+                  lower than the overall average <strong>{totalAverage}</strong>
+                  .
+                </>
+              )}
             </Text>
           </Stack>
         </Paper>
